@@ -20,3 +20,40 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.col {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.form-group {
+    width: 200px;
+}
+
+.col a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    align-items: end;
+}
+
+.form-group select {
+    width: fit-content;
+    padding: 6px;
+    border-radius: 4px;
+    box-sizing: content-box;
+}
+
+.edit {
+
+}

@@ -1,0 +1,76 @@
+@model IEnumerable<TaskManagementSystem_ASP.Net_MVC.Models.Task>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div class="row">
+    <div class="col">
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+    </div>
+    <div class="col form-group">
+        <label name="sortby">Sort By</label>
+        <form asp-action="Index" method="get">
+            <select name="sortBy" class="form-control" onchange="this.form.submit()">
+                <option value="DueDate" selected="@(ViewBag.SortBy == "DueDate")">Due Date</option>
+                <option value="Priority" selected="@(ViewBag.SortBy == "Priority")">Priority</option>
+                <option value="Title" selected="@(ViewBag.SortBy == "Title")">Title</option>
+            </select>
+        </form>
+    </div>
+
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                Due in
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Priority)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var uploader = await UserManager.FindByIdAsync(item.AssignedUser);
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Priority)
+                </td>
+                <td>
+                    <div class="col">
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                     </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
