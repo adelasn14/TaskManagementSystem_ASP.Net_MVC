@@ -48,8 +48,6 @@
     <tbody>
         @foreach (var item in Model)
         {
-            var uploader = await UserManager.FindByIdAsync(item.AssignedUser);
-
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
