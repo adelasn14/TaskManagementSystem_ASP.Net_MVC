@@ -6,13 +6,22 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<h1 class="title">@ViewData["Title"]</h1>
+<br />
+<br />
 
 <div class="row">
     <div class="col">
-        <p>
-            <a asp-action="Create">Create New</a>
-        </p>
+        <a asp-action="Create">
+            <div class="giveBorder">
+                <i class="material-icons">add</i>
+                Create New
+            </div>
+        </a>
     </div>
     <div class="col form-group">
         <label name="sortby">Sort By</label>
@@ -24,51 +33,45 @@
             </select>
         </form>
     </div>
-
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                Due in
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Priority)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DueDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Priority)
-                </td>
-                <td>
+@foreach (var item in Model)
+{
+    <div class="taskContainer text-center">
+        <div class="row">
+            <div class="col">
+                <div class="text-center">
+                    <p class="title-text">@item.Title</p>
+                    <p class="desc-text">@item.Description</p>
+                    <p class="dueDate-text">@item.DueDate</p>
+                    <p class="priority-text">@Html.DisplayFor(modelItem => item.Priority)</p>
+
                     <div class="col">
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                         <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                         <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                     </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var priorityElements = document.querySelectorAll(".priority-text");
+
+        priorityElements.forEach(function(element) {
+            var priorityValue = element.textContent.trim().toLowerCase();
+
+            if (priorityValue === "high") {
+                element.classList.add("red-text");
+            } else if (priorityValue === "medium") {
+                element.classList.add("orange-text");
+            } else if (priorityValue === "low") {
+                element.classList.add("green-text");
+            }
+        });
+    });
+</script>
+
+}

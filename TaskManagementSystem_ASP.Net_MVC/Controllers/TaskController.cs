@@ -54,8 +54,7 @@ namespace TaskManagementSystem_ASP.Net_MVC.Controllers
                     tasks = tasks.OrderBy(t => t.DueDate).ToList();
                     break;
                 case "Priority":
-                    tasks = tasks.OrderBy(t => t.Priority == "High" ? 0 :
-                                           t.Priority == "Medium" ? 1 : 2).ToList();
+                    tasks = tasks.OrderBy(t => t.Priority == "High" ? 0 : t.Priority == "Medium" ? 1 : 2).ToList();
                     break;
                 case "Title":
                     tasks = tasks.OrderBy(t => t.Title).ToList();

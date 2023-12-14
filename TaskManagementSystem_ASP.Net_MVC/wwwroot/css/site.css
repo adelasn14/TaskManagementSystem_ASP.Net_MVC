@@ -54,6 +54,57 @@ body {
     box-sizing: content-box;
 }
 
-.edit {
+.taskContainer {
+    border: 3px dashed #A2C4C9;
+    margin: 10px;
+    margin-top: 30px;
+    padding: 10px;
+    display: inline-block;
+    width: 400px;
+}
 
+.title-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.desc-text {
+    font-size: 18px;
+}
+
+.dueDate-text {
+    font-size: 20px;
+}
+
+.priority-text {
+    font-size: 24px;
+}
+
+.title {
+    text-align: center;
+}
+
+.iconAdd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.giveBorder {
+    margin-top: 15px;
+    padding: 5px;
+    font-size: 20px;
+}
+
+.red-text {
+    color: red;
+}
+
+.orange-text {
+    color: orange;
+}
+
+.green-text {
+    color: green;
 }
