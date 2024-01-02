@@ -6,72 +6,92 @@
     ViewData["Title"] = "Index";
 }
 
+@functions {
+    string GetPriorityColor(string priority)
+    {
+        switch (priority.ToLower())
+        {
+            case "high":
+                return "red";
+            case "medium":
+                return "orange";
+            case "low":
+                return "green";
+            default:
+                return "black"; // Default color
+        }
+    }
+}
+
 <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
-<h1 class="title">@ViewData["Title"]</h1>
-<br />
-<br />
-
-<div class="row">
-    <div class="col">
+<body>
+    <div class="addButton">
         <a asp-action="Create">
             <div class="giveBorder">
-                <i class="material-icons">add</i>
-                Create New
+                <div class="icon"><i class="material-icons">add</i></div>
+                <div class="text">Add task</div>
             </div>
         </a>
     </div>
-    <div class="col form-group">
-        <label name="sortby">Sort By</label>
-        <form asp-action="Index" method="get">
-            <select name="sortBy" class="form-control" onchange="this.form.submit()">
-                <option value="DueDate" selected="@(ViewBag.SortBy == "DueDate")">Due Date</option>
-                <option value="Priority" selected="@(ViewBag.SortBy == "Priority")">Priority</option>
-                <option value="Title" selected="@(ViewBag.SortBy == "Title")">Title</option>
-            </select>
-        </form>
-    </div>
-</div>
 
-@foreach (var item in Model)
-{
-    <div class="taskContainer text-center">
-        <div class="row">
-            <div class="col">
-                <div class="text-center">
-                    <p class="title-text">@item.Title</p>
-                    <p class="desc-text">@item.Description</p>
-                    <p class="dueDate-text">@item.DueDate</p>
-                    <p class="priority-text">@Html.DisplayFor(modelItem => item.Priority)</p>
-
-                    <div class="col">
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </div>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col form-group">
+            <label name="sortby">Sort By</label>
+            <form asp-action="Index" method="get">
+                <select name="sortBy" class="form-control" onchange="this.form.submit()">
+                    <option value="DueDate" selected="@(ViewBag.SortBy == "DueDate")">Due Date</option>
+                    <option value="Priority" selected="@(ViewBag.SortBy == "Priority")">Priority</option>
+                    <option value="Title" selected="@(ViewBag.SortBy == "Title")">Title</option>
+                </select>
+            </form>
         </div>
     </div>
 
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var priorityElements = document.querySelectorAll(".priority-text");
+    @foreach (var category in new[] { "todo", "progress", "done" })
+    {
+        var categoryNames = new[] { "To do", "In progress", "Done" };
+        <div class="taskContainer" id="@category">
+            <h3>@categoryNames[Array.IndexOf(new[] { "todo", "progress", "done" }, category)]</h3>
 
-        priorityElements.forEach(function(element) {
-            var priorityValue = element.textContent.trim().toLowerCase();
+            @foreach (var item in Model.Where(t => t.IsCategories == category))
+            {
+                DateTime dueDate = item.DueDate;
+                string formattedDate = dueDate.ToString("MMMM d, yyyy");
 
-            if (priorityValue === "high") {
-                element.classList.add("red-text");
-            } else if (priorityValue === "medium") {
-                element.classList.add("orange-text");
-            } else if (priorityValue === "low") {
-                element.classList.add("green-text");
+                <div class="row" data-task-id="@item.Id">
+                    <div class="col">
+                        <div>
+                            <p class="title-text">@item.Title</p>
+                            <p class="priority-text" style="color: @GetPriorityColor(item.Priority)">@Html.DisplayFor(modelItem => item.Priority)</p>
+                            <p class="dueDate-text">@formattedDate</p>
+
+                            <div class="action">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
-        });
-    });
-</script>
+        </div>
+    }
 
-}
+    <script>document.addEventListener('DOMContentLoaded', function () {
+            var taskItems = document.querySelectorAll('.row');
+
+            taskItems.forEach(function (item) {
+                var taskId = item.getAttribute('data-task-id'); // Accessing data-task-id attribute
+
+                item.addEventListener('click', function () {
+                    console.log("Task ID: " + taskId);
+                    window.location.href = '/Task/Details/' + taskId;
+                });
+            });
+    });
+    </script>
+
+</body>

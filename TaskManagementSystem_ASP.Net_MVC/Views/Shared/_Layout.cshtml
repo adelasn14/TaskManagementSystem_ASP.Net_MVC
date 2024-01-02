@@ -7,41 +7,69 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TaskManagementSystem_ASP.Net_MVC.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Task Management System</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Task" asp-action="Index">Task</a>
-                        </li>
-                    </ul>
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-sm-2 col-auto px-0 collapse collapse-horizontal overflow-hidden" id="sidebar">
+                <div class="list-group border-0 text-center text-sm-start" id="sidebar-menu">
+                    <a class="active list-group-item border-0 d-inline-block text-truncate" data-bs-parent="#sidebar" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-dashboard"></i> <span class="d-none d-sm-inline">Home</span> </a>
+                    <a class="active list-group-item border-0 d-inline-block text-truncate" data-bs-parent="#sidebar" asp-area="" asp-controller="Task" asp-action="Index"><i class="fa fa-film"></i> <span class="d-none d-sm-inline">Task</span></a>
+                </div>
+                <div class="login-partial">
                     <partial name="_LoginPartial" />
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+            <main class="col-sm col border-start ps-md-2 pt-2">
+                <a id="menuButton" class="text-decoration-none">
+                    <i class="material-icons">chevron_right</i>
+                </a>
+                <div class="container">
+                    <main role="main" class="page-header pt-3">
+                        @RenderBody()
+                    </main>
+                </div>
+            </main>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - Task Management System
-        </div>
-    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var menuButton = document.getElementById('menuButton');
+            var iconElement = menuButton.querySelector('i');
+            var sidebar = document.getElementById('sidebar');
+            var sidebarLinks = document.querySelectorAll('#sidebar-menu a');
+            var taskContainer = document.querySelector('.taskContainer');
+
+            menuButton.addEventListener('click', function () {
+                sidebar.classList.toggle('show');
+                iconElement.classList.toggle('rotate');
+            });
+
+            // Add click event listener to links inside the sidebar
+            sidebarLinks.forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    var linkHref = link.getAttribute('href');
+                    window.location.href = linkHref;
+                    sidebar.classList.contains('show');
+                });
+            });
+
+            fetch("Task")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById(".taskContainer").innerHTML = data;
+                });
+
+            sidebar.addEventListener('click', function () {
+                taskContainer.classList.toggle('collapsed');
+            });
+        });
+    </script>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

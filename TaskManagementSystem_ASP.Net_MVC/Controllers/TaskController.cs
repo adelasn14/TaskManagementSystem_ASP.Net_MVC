@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TaskManagementSystem_ASP.Net_MVC.Data;
-using TaskManagementSystem_ASP.Net_MVC.Models;
 
 namespace TaskManagementSystem_ASP.Net_MVC.Controllers
 {
@@ -94,7 +88,7 @@ namespace TaskManagementSystem_ASP.Net_MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,DueDate,Priority,AssignedUser")] Models.Task task)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,DueDate,Priority,AssignedUser,IsCategories")] Models.Task task)
         {
             var currentUser = await _userManager.GetUserAsync(User);
 
@@ -149,7 +143,7 @@ namespace TaskManagementSystem_ASP.Net_MVC.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,DueDate,Priority,AssignedUser")] Models.Task task)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,DueDate,Priority,AssignedUser,IsCategories")] Models.Task task)
         {
             if (id != task.Id)
             {

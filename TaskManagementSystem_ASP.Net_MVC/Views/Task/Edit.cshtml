@@ -36,16 +36,21 @@
                     <option value="High">High</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label asp-for="IsCategories">Category</label>
+                <select asp-for="IsCategories" class="form-control">
+                    <option value="todo">To do</option>
+                    <option value="progress">In Progress</option>
+                    <option value="done">Done</option>
+                </select>
+            </div>
             <input type="hidden" asp-for="AssignedUser" value="@User.Identity.Name" />
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+                <input type="submit" value="Save" class="btn btn-primary" /> |
+                <a asp-action="Index">Back to List</a>
+            </div>            
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

@@ -8,11 +8,11 @@ using TaskManagementSystem_ASP.Net_MVC.Data;
 
 #nullable disable
 
-namespace TaskManagementSystem_ASP.Net_MVC.Data.Migrations
+namespace TaskManagementSystem_ASP.Net_MVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231203020350_initialSetup")]
-    partial class initialSetup
+    [Migration("20240102032854_AddTaskCategories")]
+    partial class AddTaskCategories
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -231,6 +231,10 @@ namespace TaskManagementSystem_ASP.Net_MVC.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DueDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("IsCategories")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Priority")

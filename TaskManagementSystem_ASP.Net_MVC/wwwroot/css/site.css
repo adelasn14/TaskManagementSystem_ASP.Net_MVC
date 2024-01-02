@@ -19,8 +19,8 @@ html {
 
 body {
   margin-bottom: 60px;
+  overflow-x: hidden;
 }
-
 
 .row {
     display: flex;
@@ -29,12 +29,16 @@ body {
 
 .col {
     flex: 1;
-    margin-right: 10px;
+    margin: 15px;
 }
 
 .form-group {
     width: 200px;
 }
+
+    .form-group input {
+        margin-top: 15px;
+    }
 
 .col a {
     color: #007bff;
@@ -55,13 +59,71 @@ body {
 }
 
 .taskContainer {
-    border: 3px dashed #A2C4C9;
     margin: 10px;
     margin-top: 30px;
     padding: 10px;
     display: inline-block;
-    width: 400px;
+    border-radius: 60px;
+    width: 401px;
+    height: 550px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
+
+.action {
+    text-align: center;
+}
+
+#todo {
+    background-color: #fdf8ea;
+}
+    #todo .col {
+        background-color: #fefdfc;
+        border-radius: 60px;
+    }
+    #todo p {
+        margin-left: 30px;
+    }
+    #todo h3 {
+        color: #eebb38;
+        margin-left: 30px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+#progress {
+    background-color: #f0f0ff;
+}
+    #progress .col {
+        background-color: #fefdfc;
+        border-radius: 60px;
+    }
+    #progress p {
+        margin-left: 30px;
+    }
+    #progress h3 {
+        color: #5353e2;
+        margin-left: 30px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+#done {
+    background-color: #fbeef7;
+}
+    #done .col {
+        background-color: #fefdfc;
+        border-radius: 60px;
+    }
+    #done p {
+        margin-left: 30px;
+    }
+    #done h3 {
+        color: #d648a2;
+        margin-left: 30px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
 
 .title-text {
     font-size: 24px;
@@ -85,26 +147,93 @@ body {
     text-align: center;
 }
 
-.iconAdd {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Adding icon to add button */
+.addButton {
+    float: right;
+    margin-right: 10px;
+    background-color: #E2EDf9; /* Set your desired background color */
+    border-radius: 20px;
+    padding: 10px 15px 5px 2px;
 }
+
+    .addButton a {
+        text-decoration: none;
+    }
 
 .giveBorder {
-    margin-top: 15px;
-    padding: 5px;
-    font-size: 20px;
+    background: border-box;
 }
 
-.red-text {
-    color: red;
+.icon {
+    display: table-cell;
+    vertical-align: middle;
+}
+    i {
+    font-size: 80px;
+    float: left;
+    display: block;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    }
+
+.text {
+    display: table-cell;
+    vertical-align: top;
+    font-size: 16px;
 }
 
-.orange-text {
-    color: orange;
+/* Sidebar */
+#sidebar {
+    transition: margin 0.3s;
 }
 
-.green-text {
-    color: green;
+#sidebar-menu {
+    padding: 15px;
+}
+
+#sidebar a {
+    text-decoration: none;
+    color: #d9daee;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+#sidebar a:hover {
+    color: #8a8a8b;
+}
+
+#sidebar a i {
+    margin-right: 8px;
+}
+
+/* Responsive styles for small screens */
+@media (max-width: 767px) {
+    #sidebar {
+        margin-left: -200px;
+    }
+
+    .main {
+        margin-left: 0;
+    }
+
+    #sidebar.collapsed {
+        margin-left: 0;
+    }
+}
+
+.taskContainer.collapsed {
+    width: 350px;
+}
+
+.login-partial {
+    position: absolute;
+    bottom: 25px;
+    left: 20px;
+}
+
+#menuButton i.rotate {
+    transform: rotate(180deg);
 }
